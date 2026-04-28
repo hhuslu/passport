@@ -1,47 +1,127 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Countdown</title>
+  <meta charset="UTF-8">
+  <title>Application Countdown</title>
+
   <style>
     body {
-      font-family: Arial;
+      margin: 0;
       height: 100vh;
+      background-color: #f7f7f7;
+      font-family: Arial, sans-serif;
       display: flex;
       justify-content: center;
       align-items: center;
       text-align: center;
-      background: #f7f7f7;
+    }
+
+    .flag {
+      position: absolute;
+      width: 120px;
+      height: 80px;
+      background: #ba0c2f;
+      border: 1px solid #ccc;
+    }
+
+    .flag::before {
+      content: "";
+      position: absolute;
+      left: 32px;
+      top: 0;
+      width: 18px;
+      height: 100%;
+      background: white;
+    }
+
+    .flag::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 31px;
+      width: 100%;
+      height: 18px;
+      background: white;
+    }
+
+    .blue-vertical {
+      position: absolute;
+      left: 37px;
+      top: 0;
+      width: 8px;
+      height: 100%;
+      background: #00205b;
+      z-index: 2;
+    }
+
+    .blue-horizontal {
+      position: absolute;
+      left: 0;
+      top: 36px;
+      width: 100%;
+      height: 8px;
+      background: #00205b;
+      z-index: 2;
+    }
+
+    .top-left { top: 30px; left: 40px; }
+    .top-right { top: 30px; right: 40px; }
+    .bottom-left { bottom: 30px; left: 40px; }
+    .bottom-right { bottom: 30px; right: 40px; }
+
+    .content {
+      max-width: 1000px;
+      padding: 20px;
+      color: #222;
     }
 
     h1 {
-      font-size: 42px;
+      font-size: 44px;
+      margin-bottom: 20px;
     }
 
     p {
+      font-size: 30px;
+      margin: 15px 0;
+    }
+
+    .target {
+      margin-top: 30px;
       font-size: 20px;
-      color: gray;
+      color: #666;
     }
   </style>
 </head>
+
 <body>
 
-  <div>
-    <h1>I have <span id="countdown"></span> left to apply</h1>
-    <p>Target date: August 18, 2027</p>
+  <div class="flag top-left"><div class="blue-vertical"></div><div class="blue-horizontal"></div></div>
+  <div class="flag top-right"><div class="blue-vertical"></div><div class="blue-horizontal"></div></div>
+  <div class="flag bottom-left"><div class="blue-vertical"></div><div class="blue-horizontal"></div></div>
+  <div class="flag bottom-right"><div class="blue-vertical"></div><div class="blue-horizontal"></div></div>
+
+  <div class="content">
+    <h1>I have <span id="years"></span> year, <span id="months"></span> months, <span id="days"></span> days left to apply</h1>
+
+    <p>Jeg har <span id="yearsNo"></span> år, <span id="monthsNo"></span> måneder og <span id="daysNo"></span> dager igjen til å søke</p>
+
+    <p>Başvuru yapmama <span id="yearsTr"></span> yıl, <span id="monthsTr"></span> ay ve <span id="daysTr"></span> gün kaldı</p>
+
+    <div class="target">Target date: August 18, 2027</div>
   </div>
 
   <script>
-    const target = new Date(2027, 7, 18); 
-    const today = new Date();
+    var target = new Date(2027, 7, 18);
+    var today = new Date();
 
-    let years = target.getFullYear() - today.getFullYear();
-    let months = target.getMonth() - today.getMonth();
-    let days = target.getDate() - today.getDate();
+    var years = target.getFullYear() - today.getFullYear();
+    var months = target.getMonth() - today.getMonth();
+    var days = target.getDate() - today.getDate();
 
     if (days < 0) {
       months = months - 1;
-      let lastMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
-      days = days + lastMonth.getDate();
+      var daysInCurrentMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0).getDate();
+      days = days + daysInCurrentMonth;
     }
 
     if (months < 0) {
@@ -49,8 +129,17 @@
       months = months + 12;
     }
 
-    document.getElementById("countdown").innerHTML =
-      years + " year, " + months + " months, " + days + " days";
+    document.getElementById("years").textContent = years;
+    document.getElementById("months").textContent = months;
+    document.getElementById("days").textContent = days;
+
+    document.getElementById("yearsNo").textContent = years;
+    document.getElementById("monthsNo").textContent = months;
+    document.getElementById("daysNo").textContent = days;
+
+    document.getElementById("yearsTr").textContent = years;
+    document.getElementById("monthsTr").textContent = months;
+    document.getElementById("daysTr").textContent = days;
   </script>
 
 </body>
