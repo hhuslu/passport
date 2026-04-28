@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Countdown</title>
+  <style>
+    body {
+      font-family: Arial;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      background: #f7f7f7;
+    }
+
+    h1 {
+      font-size: 42px;
+    }
+
+    p {
+      font-size: 20px;
+      color: gray;
+    }
+  </style>
+</head>
+<body>
+
+  <div>
+    <h1>I have <span id="countdown"></span> left to apply</h1>
+    <p>Target date: August 18, 2027</p>
+  </div>
+
+  <script>
+    const target = new Date(2027, 7, 18); 
+    const today = new Date();
+
+    let years = target.getFullYear() - today.getFullYear();
+    let months = target.getMonth() - today.getMonth();
+    let days = target.getDate() - today.getDate();
+
+    if (days < 0) {
+      months = months - 1;
+      let lastMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+      days = days + lastMonth.getDate();
+    }
+
+    if (months < 0) {
+      years = years - 1;
+      months = months + 12;
+    }
+
+    document.getElementById("countdown").innerHTML =
+      years + " year, " + months + " months, " + days + " days";
+  </script>
+
+</body>
+</html>
